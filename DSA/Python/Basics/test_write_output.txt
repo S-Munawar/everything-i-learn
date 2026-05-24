@@ -1,0 +1,9 @@
+Hello there!
+This is some text written from Python.
+Have a great day!
+Oh wait, I forgot to add this extra line!
+
+--- Shopping List ---
+1. Apples
+2. Bananas
+3. Milk
