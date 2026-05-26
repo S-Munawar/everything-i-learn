@@ -1,6 +1,7 @@
 # Problem Set 4C
-# Name:
-# Collaborators:
+# Name: Shaik Abdul Munawar
+# Collaborators: None
+# Time Spent: 01:00:00
 
 import json
 import ps4b # Importing your work from Part B
@@ -41,7 +42,7 @@ def is_word(word_list, word):
     >>> is_word(word_list, 'asdf') returns
     False
     '''
-    word = word.strip(" !@#$%^&*()-_+={}[]|\:;'<>?,./\"").lower()
+    word = word.strip(" !@#$%^&*()-_+={}[]|:;'<>?,./\"").lower()
     return word in word_list
 
 
@@ -80,7 +81,21 @@ def decrypt_message_try_pads(ciphertext, pads):
 
     Returns: (PlaintextMessage) A message with the decrypted ciphertext and the best pad
     '''
-    raise NotImplementedError  # delete this line and replace with your code here
+    valid_pad = None
+    max_valid_words = 0
+    valid_decrypted_message = None
+    word_list = load_words(WORDLIST_FILENAME)
+    for pad in pads:
+        decrypted_message = ciphertext.decrypt_message(pad)
+        count = 0
+        for word in decrypted_message.get_text().split():
+            if is_word(word_list, word):
+                count += 1
+        if count >= max_valid_words:
+            max_valid_words = count
+            valid_pad = pad
+            valid_decrypted_message = decrypted_message
+    return valid_decrypted_message
 
 
 def decode_story():
@@ -91,8 +106,12 @@ def decode_story():
     Returns: (string) the decoded story
 
     '''
-    raise NotImplementedError  # delete this line and replace with your code here
+    story_string = get_story_string()
+    story_pads = get_story_pads()
+    story_ciphertext = ps4b.EncryptedMessage(story_string)
+    decoded_story = decrypt_message_try_pads(story_ciphertext, story_pads)
 
+    return decoded_story.get_text()
 
 
 if __name__ == '__main__':

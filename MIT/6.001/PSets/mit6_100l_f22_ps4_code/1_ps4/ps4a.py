@@ -1,7 +1,7 @@
 # Problem Set 4A
 # Name: Shaik Abdul Munawar
 # Collaborators: None
-# Time Spent: 03:00:00
+# Time Spent: 01:00:00
 
 from tree import Node # Imports the Node object used to construct trees
 
