@@ -5,6 +5,7 @@
 # Problem Set 3
 # Name: Shaik Abdul Munawar
 # Collaborators: None
+# Time Spent: 03:00:00
 
 # Purpose: Check for similarity between two texts by comparing different kinds of word statistics.
 
@@ -38,18 +39,18 @@ def text_to_list(input_text):
     Returns:
         list representation of input_text, where each word is a different element in the list
     """
-    list = []
-    word = ""
+    words = []
+    current_word = ""
     for char in input_text:
         if char in '\n \r':
-            if word:
-                list.append(word)
-            word = ""
+            if current_word:
+                words.append(current_word)
+            current_word = ""
         else:
-            word += char
-    if word:
-        list.append(word)
-    return list
+            current_word += char
+    if current_word:
+        words.append(current_word)
+    return words
 
 
 ### Problem 1: Get Frequency ###
@@ -64,10 +65,10 @@ def get_frequencies(input_iterable):
     Note: 
         You can assume that the only kinds of white space in the text documents we provide will be new lines or space(s) between words (i.e. there are no tabs)
     """
-    dict = {}
+    freq_dict = {}
     for word in input_iterable:
-        dict[word] = dict.get(word, 0) + 1
-    return dict
+        freq_dict[word] = freq_dict.get(word, 0) + 1
+    return freq_dict
 
 
 ### Problem 2: Letter Frequencies ###
@@ -80,10 +81,10 @@ def get_letter_frequencies(word):
         is a letter in word and the corresponding int
         is the frequency of the letter in word
     """
-    dict = {}
+    letter_freq = {}
     for char in word:
-        dict[char] = dict.get(char, 0) + 1
-    return dict
+        letter_freq[char] = letter_freq.get(char, 0) + 1
+    return letter_freq
 
 
 ### Problem 3: Similarity ###
@@ -112,26 +113,22 @@ def calculate_similarity_score(freq_dict1, freq_dict2):
         Return 1-(DIFF/ALL) rounded to 2 decimal places
     """
     diff = 0
-    sum = 0
-    similarity_score = 0
+    total_freq = 0
     
-    max_length = max(len(freq_dict1), len(freq_dict2))
     for word in freq_dict1:
         if word in freq_dict2:
             diff += abs(freq_dict1[word] - freq_dict2[word])
-            sum += freq_dict1[word] + freq_dict2[word]
+            total_freq += freq_dict1[word] + freq_dict2[word]
         else:
             diff += freq_dict1[word]
-            sum += freq_dict1[word]
+            total_freq += freq_dict1[word]
             
     for word in freq_dict2:
-        if word in freq_dict1:
-            continue
-        else:
+        if word not in freq_dict1:
             diff += freq_dict2[word]
-            sum += freq_dict2[word]
+            total_freq += freq_dict2[word]
             
-    similarity_score = round(1 - (diff / sum), 2)
+    similarity_score = round(1 - (diff / total_freq), 2)
     
     return similarity_score
 
@@ -156,41 +153,33 @@ def get_most_frequent_words(freq_dict1, freq_dict2):
     If multiple words are tied (i.e. share the same highest frequency),
     return an alphabetically ordered list of all these words.
     """
-    result = []
-    max_freq = 0
+    most_frequent_words = []
+    max_frequency = 0
 
     for word in freq_dict1:
-        curr_freq = freq_dict1[word] + freq_dict2.get(word, 0)
+        combined_frequency = freq_dict1[word] + freq_dict2.get(word, 0)
 
-        if curr_freq > max_freq:
-            max_freq = curr_freq
-            result = [word]
+        if combined_frequency > max_frequency:
+            max_frequency = combined_frequency
+            most_frequent_words = [word]
 
-        elif curr_freq == max_freq:
-            result.append(word)
+        elif combined_frequency == max_frequency:
+            most_frequent_words.append(word)
 
     for word in freq_dict2:
         if word in freq_dict1:
             continue
 
-        curr_freq = freq_dict2[word]
+        combined_frequency = freq_dict2[word]
 
-        if curr_freq > max_freq:
-            max_freq = curr_freq
-            result = [word]
+        if combined_frequency > max_frequency:
+            max_frequency = combined_frequency
+            most_frequent_words = [word]
 
-        elif curr_freq == max_freq:
-            result.append(word)
-
-    # for word in set(freq_dict1) | set(freq_dict2):
-    #     curr_freq = freq_dict1.get(word, 0) + freq_dict2.get(word, 0)
-    #     if curr_freq == max_freq:
-    #         result.append(word)
-    #     elif curr_freq > max_freq:
-    #         result = [word]
-    #         max_freq = curr_freq
+        elif combined_frequency == max_frequency:
+            most_frequent_words.append(word)
     
-    return result
+    return most_frequent_words
 
 ### Problem 5: Finding TF-IDF ###
 def get_tf(file_path):
@@ -205,11 +194,12 @@ def get_tf(file_path):
     * Think about how we can use get_frequencies from earlier
     """
     input_text = load_file(file_path)
-    input_list = text_to_list(input_text)
-    dict = get_frequencies(input_list)
-    for word in dict:
-        dict[word] = dict[word] / len(input_list)
-    return dict
+    words = text_to_list(input_text)
+    tf_dict = get_frequencies(words)
+    total_words = len(words)
+    for word in tf_dict:
+        tf_dict[word] = tf_dict[word] / total_words
+    return tf_dict
 
 def get_idf(file_paths):
     """
@@ -223,22 +213,24 @@ def get_idf(file_paths):
     with math.log10()
 
     """
-    dict = {}
-    for i in range(len(file_paths)):
+    idf_dict = {}
+    total_documents = len(file_paths)
+    
+    for i in range(total_documents):
         input_text = load_file(file_paths[i])
-        input_list = text_to_list(input_text)
-        for word in input_list:
-            if word in dict:
+        current_words = text_to_list(input_text)
+        for word in current_words:
+            if word in idf_dict:
                 continue
             else:
-                count = 1
-                for x in range(i+1, len(file_paths)):
-                    input_text2 = load_file(file_paths[x])
-                    input_list2 = text_to_list(input_text2)
-                    if word in input_list2:
-                        count += 1
-                dict[word] = math.log10((len(file_paths) / count))
-    return dict
+                doc_count = 1
+                for j in range(i + 1, total_documents):
+                    other_text = load_file(file_paths[j])
+                    other_words = text_to_list(other_text)
+                    if word in other_words:
+                        doc_count += 1
+                idf_dict[word] = math.log10(total_documents / doc_count)
+    return idf_dict
 
 def get_tfidf(tf_file_path, idf_file_paths):
     """
@@ -255,12 +247,12 @@ def get_tfidf(tf_file_path, idf_file_paths):
         """
     tf_dict = get_tf(tf_file_path)
     idf_dict = get_idf(idf_file_paths)
-    tfidf_list = []
+    tfidf_scores = []
     for word in tf_dict:
-        tfidf = tf_dict[word] * idf_dict[word]
-        tfidf_list.append((word, tfidf))
-    tfidf_list.sort(key=lambda x: (x[1], x[0]))
-    return tfidf_list
+        tfidf_score = tf_dict[word] * idf_dict[word]
+        tfidf_scores.append((word, tfidf_score))
+    tfidf_scores.sort(key=lambda x: (x[1], x[0]))
+    return tfidf_scores
     
 if __name__ == "__main__":
     pass
