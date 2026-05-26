@@ -1,0 +1,171 @@
+Python Environment Notes
+========================
+
+System Python
+-------------
+
+- Global Python installed on the computer.
+- Used to create virtual environments.
+
+
+Python Interpreter
+------------------
+
+- Executable that runs Python code.
+
+Examples:
+
+    python
+    python3
+    .venv/bin/python
+
+
+Virtual Environment (venv)
+--------------------------
+
+- Isolated Python workspace for a project.
+- Contains:
+  - interpreter
+  - packages
+  - activation scripts
+
+
+Why Virtual Environments
+------------------------
+
+- Avoid dependency conflicts.
+- Different projects can use different package versions.
+
+
+Create Environment
+------------------
+
+    python -m venv .venv
+
+
+Activate Environment
+--------------------
+
+Linux/macOS:
+
+    source .venv/bin/activate
+
+Windows:
+
+    .venv\Scripts\activate
+
+
+Install Packages
+----------------
+
+    pip install <package>
+
+- Packages install only inside the active environment.
+
+
+Deactivate Environment
+----------------------
+
+    deactivate
+
+
+VS Code Interpreter
+-------------------
+
+- VS Code uses the selected interpreter for running code.
+- Select using:
+
+    Ctrl + Shift + P
+    Python: Select Interpreter
+
+
+Interpreter vs Environment
+--------------------------
+
+- Interpreter = Python executable.
+- Environment = folder containing isolated interpreter + packages.
+
+
+Common Beginner Issue
+---------------------
+
+- VS Code uses `.venv`.
+- Terminal still uses system Python.
+
+
+Check Active Interpreter
+------------------------
+
+Linux/macOS:
+
+    which python
+
+Windows:
+
+    where python
+
+Exact check:
+
+    python -c "import sys; print(sys.executable)"
+
+
+Conda
+-----
+
+- Environment + package manager.
+- Can manage:
+  - Python versions
+  - packages
+  - non-Python dependencies
+
+
+Anaconda
+--------
+
+- Full Python distribution for:
+  - data science
+  - machine learning
+  - scientific computing
+
+
+venv vs Conda
+-------------
+
+venv:
+
+- lightweight
+- built into Python
+- good for normal development
+
+Conda:
+
+- heavier
+- better for ML/scientific workflows
+
+
+Use venv For
+------------
+
+- learning Python
+- web/backend development
+- small/medium projects
+
+
+Use Conda For
+-------------
+
+- machine learning
+- CUDA/GPU workflows
+- scientific computing
+
+
+Modern Alternatives
+-------------------
+
+uv:
+
+- fast package/environment manager
+
+pyenv:
+
+- manages multiple Python versions
