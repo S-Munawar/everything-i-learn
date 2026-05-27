@@ -1,7 +1,8 @@
 """
 # Problem Set 5
-# Name:
-# Collaborators:
+# Name: Shaik Abdul Munawar
+# Collaborators: None
+# Time Spent: 05:00:00
 """
 
 from PIL import Image, ImageFont, ImageDraw
@@ -69,7 +70,9 @@ def img_to_pix(filename):
                  in form (R,G,B) such as [(0,0,0),(255,255,255),(38,29,58)...] for RGB image
                  in form L such as [60,66,72...] for BW image
     """
-    pass
+    img = Image.open(filename)
+    pixels = list(img.getdata())
+    return pixels
 
 
 def pix_to_img(pixels_list, size, mode):
@@ -88,8 +91,9 @@ def pix_to_img(pixels_list, size, mode):
     returns:
         img: Image object made from list of pixels
     """
-    pass
-
+    img = Image.new(mode, size)
+    img.putdata(pixels_list)
+    return img
 
 def filter(pixels_list, color):
     """
@@ -100,7 +104,16 @@ def filter(pixels_list, color):
     returns: list of pixels in same format as earlier functions,
     transformed by matrix multiplication
     """
-    pass
+    color_matrix = make_matrix(color)
+    pixel_matrix = numpy.array(pixels_list).T
+    transformed_matrix = matrix_multiply(color_matrix, pixel_matrix)
+    transformed_pixels = []
+    for i in range(len(pixels_list)):
+        r = max(0, min(255, int(transformed_matrix[0][i])))
+        g = max(0, min(255, int(transformed_matrix[1][i])))
+        b = max(0, min(255, int(transformed_matrix[2][i])))
+        transformed_pixels.append((r, g, b))
+    return transformed_pixels
 
 
 def extract_end_bits(num_end_bits, pixel):
@@ -133,7 +146,13 @@ def extract_end_bits(num_end_bits, pixel):
     Returns:
         The num_end_bits of pixel, as an integer (BW) or tuple of integers (RGB).
     """
-    pass
+    result = 0
+    mod = 2 ** num_end_bits
+    if isinstance(pixel, int):
+        result = pixel % mod
+    else:
+        result = tuple(x % mod for x in pixel)
+    return result
 
 
 def reveal_bw_image(filename):
@@ -144,9 +163,17 @@ def reveal_bw_image(filename):
     Returns:
         result: an Image object containing the hidden image
     """
-    pass
-
-
+    img = Image.open(filename)
+    pixels = list(img.getdata())
+    revealed_pixels = []
+    for i in range(len(pixels)):
+        extracted = extract_end_bits(1, pixels[i])
+        scaled = extracted * 255
+        revealed_pixels.append(scaled)
+    result = pix_to_img(revealed_pixels, img.size, 'L')
+    return result
+    
+    
 def reveal_color_image(filename):
     """
     Extracts the 3 LSBs for each pixel in the RGB input image. 
@@ -155,7 +182,15 @@ def reveal_color_image(filename):
     Returns:
         result: an Image object containing the hidden image
     """
-    pass
+    img = Image.open(filename)
+    pixels = list(img.getdata())
+    revealed_pixels = []
+    for i in range(len(pixels)):
+        extracted = extract_end_bits(3, pixels[i])
+        scaled = tuple(x * 255 // 7 for x in extracted)
+        revealed_pixels.append(scaled)
+    result = pix_to_img(revealed_pixels, img.size, 'RGB')
+    return result
 
 
 def reveal_image(filename):
@@ -202,25 +237,28 @@ def main():
 
     # Uncomment the following lines to test part 1
 
-    #im = Image.open('image_15.png')
-    #width, height = im.size
-    #pixels = img_to_pix('image_15.png')
+    im = Image.open('image_15.png')
+    width, height = im.size
+    pixels = img_to_pix('image_15.png')
 
-    #non_filtered_pixels = filter(pixels,'none')
-    #im = pix_to_img(non_filtered_pixels, (width, height), 'RGB')
-    # im.show()
+    non_filtered_pixels = filter(pixels,'none')
+    im = pix_to_img(non_filtered_pixels, (width, height), 'RGB')
+    im.show()
 
-    #red_filtered_pixels = filter(pixels,'red')
-    #im2 = pix_to_img(red_filtered_pixels,(width,height), 'RGB')
-    # im2.show()
+    red_filtered_pixels = filter(pixels,'red')
+    im2 = pix_to_img(red_filtered_pixels,(width,height), 'RGB')
+    im2.show()
 
     # Uncomment the following lines to test part 2
-    #im = reveal_image('hidden1.bmp')
-    # im.show()
+    im = reveal_image('hidden1.bmp')
+    im.show()
 
-    #im2 = reveal_image('hidden2.bmp')
-    # im2.show()
+    im2 = reveal_image('hidden2.bmp')
+    im2.show()
     
+    draw_kerb('tmpt0gia277.PNG', 'shaikabdulmunawar')
+    draw_kerb('tmpu_ygo99u.PNG', 'shaikabdulmunawar')
+    draw_kerb('tmpzu2yn6o8.PNG', 'shaikabdulmunawar')
 
 if __name__ == '__main__':
     main()
