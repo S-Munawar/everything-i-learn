@@ -3,6 +3,10 @@
 #########################
 ## EXAMPLE: combinations of print and return
 #########################
+from math import ceil, floor
+import math
+
+
 def is_even_with_return( i ):
     """ 
     Input: i, a positive int
@@ -57,8 +61,8 @@ def is_triangular(n):
     for i in range(n):
         total += i
         if total == n:
-            print(True)
-    print(False)
+            return True
+    return False
 
 # # start by runing it on simple test cases
 # print(is_triangular(4))  # print False
@@ -97,8 +101,16 @@ def count_nums_with_sqrt_close_to(n, epsilon):
     Returns how many integers have a square root within epsilon of n """
     # your code here
 
+    low = math.floor((n-epsilon)**2)
+    high = math.ceil((n+epsilon)**2)
+    count = 0
+    
+    for i in range(low + 1, high):
+        count += 1
+        
+    return count
 
-#print(count_nums_with_sqrt_close_to(10, 0.1))
+print(count_nums_with_sqrt_close_to(10, 0.1))
 
 #############################################################
 
@@ -191,6 +203,11 @@ def apply(criteria,n):
     (i.e. return True when criteria is applied to them)
     """ 
     # your code here
+    count = 0
+    for i in range(0, n+1):
+        if criteria(i):
+            count += 1
+    return count
 
 
 def is_even(x):
@@ -214,6 +231,13 @@ def max_of_both(n, f1, f2):
     Returns the maximum value of all these results.
     """
     # your code here
+    maximum = 0
+    for i in range(0, n+1):
+        v1 = f1(i)
+        v2 = f2(i)
+        maximum = max(maximum, v1, v2)
+        
+    return maximum
 
 # print(max_of_both(2, lambda x:x-1, lambda x:x+1))  # prints 3
 # print(max_of_both(10, lambda x:x*2, lambda x:x/2))  # prints 20
@@ -273,6 +297,13 @@ def is_palindrome(s):
     A palindrome is a string that contains the same 
     sequence of characters forward and backward """
     # your code here
+    for i in range(len(s)):
+        if s[i] != s[len(s)-i-1]:
+            # returning here essentially breaks the loop
+            # as soon as we find an inconsistency
+            return False
+    return True
+
 
 # For example:
 # print(is_palindrome("222"))   # prints True
@@ -286,7 +317,8 @@ def f_yields_palindrome(n, f):
     Returns True if applying f on n returns a number that is a
     palindrome and False otherwise.  """
     # your code here
-
+    f_on_n = f(n)
+    return is_palindrome(str(f_on_n))
 
 # For example:
 def f(x):

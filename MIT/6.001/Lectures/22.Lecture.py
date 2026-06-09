@@ -286,10 +286,10 @@ for i in range(10):
     L_N.append(L_N[-1]*10)
 
 bin_search_counts = []
-# for N in L_N:
-#     count = 0
-#     L = range(N)
-#     for x in [L[0], L[len(L)//2], L[-1]]:
-#         my_bool = binary_search_counter(L, x)
-#     print ('binary_search for ', N, 'elements, did', count, 'operations')
-#     bin_search_counts.append(count)
+for N in L_N:
+    count = 0
+    L = range(N)
+    for x in [L[0], L[len(L)//2], L[-1]]:
+        my_bool = binary_search_counter(L, x)
+    print ('binary_search for ', N, 'elements, did', count, 'operations')
+    bin_search_counts.append(count)

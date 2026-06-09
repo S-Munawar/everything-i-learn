@@ -47,7 +47,7 @@ c = "musketeers"
 
 # num = 5
 # print("my num is", num)
-# s = "my num is" + str(num)
+# s = "my num is" + " " + str(num)
 # print(s)
 
 # x = 1
@@ -76,9 +76,9 @@ c = "musketeers"
 #     run run run run run
 
 # your code here
-
-
-
+verb = input("Enter a verb: ")
+print(f"I can {verb} better than you!")
+print((verb + " ")*4 + verb)
 #########################################
 
 # #Example 3 - Newton's Method for cube root
@@ -116,7 +116,9 @@ c = "musketeers"
 # * Prints a bool depending on whether the guess matches the secret.
 
 # your code here
-
+secret = 42
+guess = int(input("Guess a number: "))
+print(guess == secret)
     
 
 #########################################
@@ -132,6 +134,7 @@ c = "musketeers"
 # else:
 #     leftover = abs(24-pset_time-sleep_time)
 #     print(leftover,"h of free time!")
+#
 # print("end of day")
 
 
@@ -141,7 +144,7 @@ c = "musketeers"
 # y = int(input("Enter a different number for y: "))
 # if x == y:
 #     print(x,"is the same as",y)
-# print("These are equal!")
+#     print("These are equal!")
 
 #########################################
 
@@ -157,6 +160,7 @@ c = "musketeers"
 #     print("x is smaller")
 # else:
 #     print("y is smaller")
+
 # print("thanks!")
 
 
@@ -164,7 +168,7 @@ c = "musketeers"
 # What's printed when y = 2, y = 20, y = 11?
 # What if "if x <= y:" becomes "elif x <= y:"
 
-# answer = ''
+# answer = 'hi'
 # x = 11
 # y = 2 # try 20 and 11
 # if x == y:
@@ -184,7 +188,15 @@ c = "musketeers"
 # * Prints whether the guess is too low, too high, or the same as the secret. 
 
 # your code here
-
+secret = 42
+guess = int(input("Guess a number: "))
+if guess > secret:
+    print("Your guess is too high.")
+elif guess < secret:
+    print("Your guess is too low.")
+else:    
+    print("You are correct!")
+    
 #############################################
 
 #########################################
@@ -217,7 +229,7 @@ s[2::-1]
 # answer = ''
 # x = 11
 # # try with y = 2 and y = 12
-# y = 2
+# y = 12
 # if len(str(x)) == len(str(y)):
 #     if y != 0 and x%2 == 1:
 #         answer = answer + "x / y is " + str(x/y)

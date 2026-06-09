@@ -92,7 +92,7 @@
 # epsilon = 0.01
 # num_guesses = 0
 # guess = 0.0
-# increment = 0.0001  # try with 0.00001
+# increment = 0.00001  # try with 0.00001
 # while abs(guess**2 - x) >= epsilon and guess**2 <= x:
 #     guess += increment
 #     num_guesses += 1
@@ -117,6 +117,9 @@
 # count = 20     # check different numbers here
 # for i in range(count):
 #     x += 0.022 # increment
+#     if not x == 0.022*(i+1):
+#         print(f'count is {i+1} where {x} != {0.022*(i+1)}') 
+#         break
 #     print(x)      # check this value for floating point error
 
 
@@ -126,6 +129,25 @@
 # until you start to get a floating point error.
 
 # your code here
+# increament = float(input('Enter an increment value: '))
+# x = 0
+# count = 0
+# while True:
+#     x += increament
+#     count += 1
+#     if not x == increament*count:
+#         print(f'count is {count} where {x} != {increament*count}') 
+#         break
+#     print(x)      # check this value for floating point error
+
+# increament = float(input('Enter an increment value: '))
+# x = increament
+# times = 1
+# while x == increament*times:
+#     print(x)
+#     x += increament
+#     times += 1
+# print(f'count is {times} where {x} != {increament*(times)}')
 
 #################################################
 #################################################
@@ -147,7 +169,7 @@
 #     print(x)
 #     x += n
 #     N += 1
-# note that the x and N increments one extra time 
+# # note that the x and N increments one extra time 
 # print(f'count is {N-1} where {x-n} != {n*(N-1)}')
 
 #################################################

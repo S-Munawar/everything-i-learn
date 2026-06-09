@@ -54,6 +54,11 @@ origin = Coordinate(a,a)
 # Number of occupants
 # Color 
 # Decide the type of each data attribute and document this
+class Vehicle(object):
+    def __init__(self, w, o, c):
+        self.wheels = w
+        self.occ = o
+        self.color= c
 
 # Question 2:
 # Create 2 vehicle instances using the class we wrote previously. 
@@ -61,6 +66,10 @@ origin = Coordinate(a,a)
 # One green vehicle with 18 wheels, and 3 occupants
 # Print the first one's number of occupants
 # Print the second one's color
+car1 = Vehicle(2, 1, 'red')
+car2 = Vehicle(18, 3, 'green')
+print(car1.occ)
+print(car2.color)
 
 # Question 3:
 # Add on to the code from above for class Vehicle.
@@ -68,12 +77,16 @@ origin = Coordinate(a,a)
 # which takes in an int n. When called, self's number of occupants 
 # increases by n. It returns the total occupants after the increase. 
 
+
 class Vehicle(object):
     def __init__(self, w, o, c):
         self.wheels = w
         self.occ = o
         self.color= c
     # add method add_n_occupants here
+    def add_n_occupants(self, n):
+        self.occ += n
+        return self.occ
         
 # v1 = Vehicle(4,2,'blue')
 # print(v1.occ)   # prints 2
@@ -88,11 +101,37 @@ class Vehicle(object):
 # exceeds the max_occupancy allowed for that vehicle, 
 #   * you do not perform the increase, and
 #   * you raise a ValueError with an apprpriate message
+class Vehicle(object):
+    def __init__(self, w, o, c):
+        self.wheels = w
+        self.occ = o
+        self.color= c
+        self.max_occ = 5
+    def add_n_occupants(self, n):
+        new_occ = self.occ + n
+        if new_occ > self.max_occ:
+            raise ValueError("exceeded max occupancy")
+        else:
+            self.occ = new_occ
+            return self.occ
 
 #Question 5:
 # Modify the Vehicle class __init__ such that if a vehicle is created
 # without specifying a color then the color is set to "black".
 # Hint: remember default parameters?
+class Vehicle(object):
+    def __init__(self, w, o, c='black'):
+        self.wheels = w
+        self.occ = o
+        self.color= c
+        self.max_occ = 5
+    def add_n_occupants(self, n):
+        new_occ = self.occ + n
+        if new_occ > self.max_occ:
+            raise ValueError("exceeded max occupancy")
+        else:
+            self.occ = new_occ
+            return self.occ
 
 ###########################################################
 

@@ -53,7 +53,11 @@
 # the while loop more than 2 times. Hint: use a counter
 ###################
 # where = input("Go left or right? ")
+# counter = 0
 # while where == "right":
+#     counter = counter + 1
+#     if counter > 2:
+#         print(":(")
 #     where = input("Go left or right? ")
 # print("You got out!")
 
@@ -137,7 +141,7 @@
 # mysum = 0
 # start = 3
 # end = 5
-# for i in range(start, end):
+# for i in range(start, end+1):
 #     mysum += i
 # print(mysum)
 
@@ -154,7 +158,10 @@
 # line, between 1 (inclusive) and x (inclusive) that are divisible by 5.
 # For ex. if x = 15, it prints 5, 10, and 15. 
 # For ex. if x = 14, it prints 5 and 10.
-
+# x = 15
+# for i in range(1, x+1):
+#     if i % 5 == 0:
+#         print(i)
 
 # Practice 2:
 # Declare a variable n that stores an int. Print the sum of all digits 
@@ -199,6 +206,14 @@
 #     if n == 0:
 #         break
 # print(total)
+
+# n = 1234
+# sum = 0
+# while n > 0:
+#     rem = n % 10
+#     sum += rem
+#     n = n // 10
+# print(sum)
 
 #########################################################
 ##################### END ANSWERS AT HOME ###########################

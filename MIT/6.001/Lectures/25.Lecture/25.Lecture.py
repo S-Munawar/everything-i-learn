@@ -46,7 +46,6 @@ for i in range(0, 30):
 # #### Plotting one line
 # plt.plot(nVals, linear)
 
-
 # ##### order of data points matters
 testSamples = [0,5,3,6,15,2,1,4,25,20,7,21,22,23,9,8,24,10,12,11]
 testValues =  [0,25,9,36,225,4,1,16,625,400,49,441,484,529,81,64,576,100,144,121]
@@ -82,8 +81,8 @@ testValues =  [0,25,9,36,225,4,1,16,625,400,49,441,484,529,81,64,576,100,144,121
 ## Temperature with axes options
 ################
 ###### Plotting temperatures and changing xaxis
-months = range(1, 13, 1)
-temps = [28,32,39,48,59,68,75,73,66,54,45,34]
+# months = range(1, 13, 1)
+# temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 # plt.plot(months, temps)
 
 # # ## Add axes, labels, and a title
@@ -114,7 +113,7 @@ temps = [28,32,39,48,59,68,75,73,66,54,45,34]
 # phoenix = [54,57,61,68,77,86,91,90,84,73,61,54]
 # plt.plot(months, phoenix, label = 'Phoenix')
 # plt.title('Ave. Temperatures')
-# plt.xlabel('Month')
+# plt.xlabel('Momatplotlibnth')
 # plt.ylabel('Degrees F')
 # plt.xticks((1,2,3,4,5,6,7,8,9,10,11,12),
 #           ('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'))
@@ -177,7 +176,7 @@ def getUSPop(fileName):
 # plt.xlabel('Year')
 # plt.ylabel('Population')
 
-####### Change the scale to semilog
+# ###### Change the scale to semilog
 # plt.semilogy()   
 
 
@@ -419,5 +418,5 @@ if False:
                 plt.xlabel('Temperature')
                 plt.ylabel(('Number of days'))
                 plt.bar(temps, ans, color = 'red', label = y)
-       
+
         plt.legend(loc = 'best')

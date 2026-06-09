@@ -32,7 +32,8 @@ def remove_all(L, e):
     Returns None.
     """
     # your code here
-    
+    while e in L:
+        L.remove(e)
 
 # Lin = [1,2,2,2]
 # remove_all(Lin, 2)
@@ -253,10 +254,14 @@ def repeat(L, n):
         n is a positive int
     Mutates L to contain whatever elements L has right now repeated n times. """
     # your code here 
+    rep = len(L)
+    for i in range(n-1):
+        for j in range(rep):
+            L.append(L(j))
     
-# Lin = [1,2,3]
-# repeat(Lin, 3)
-# print(Lin)    # prints [1, 2, 3, 1, 2, 3, 1, 2, 3]
+Lin = [1,2,3]
+repeat(Lin, 3)
+print(Lin)    # prints [1, 2, 3, 1, 2, 3, 1, 2, 3]
 
 # Think about why the following solution does not work!
 def repeat(L, n):

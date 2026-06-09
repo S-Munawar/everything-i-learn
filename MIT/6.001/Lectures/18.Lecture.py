@@ -48,9 +48,11 @@ origin = Coordinate(0,0)
 class Circle(object):
     def __init__(self, center, radius):
 
-        self.center = center
-        self.radius = radius
-        
+        if type(center) == Coordinate and type(radius) == int:
+            self.center = center
+            self.radius = radius
+        else:
+            raise ValueError("Invalid input types for Circle")
 
 # center = Coordinate(2, 2)
 # my_circle = Circle(center, 2)   # no error
@@ -88,14 +90,14 @@ class SimpleFraction(object):
         self.num = num
         self.denom = denom
     def times(self, other):
-        """ Returns a float representing the addition """
+        """ Returns a float representing the multiplication """
         top = self.num*other.num
         bottom = self.denom*other.denom
         return top/bottom
     def divide(self, other):
-        """ Returns a float representing the subtraction """
-        top = self.num*other.denom
-        bottom = self.denom*other.num
+        """ Returns a float representing the division """
+        top = self.denom*other.num
+        bottom = self.num*other.denom
         return top/bottom
     def plus(self, other):
         """ Returns a float representing the addition """
@@ -137,12 +139,12 @@ class SimpleFraction(object):
     def get_inverse(self):
         """ Returns a float representing 1/self """
         # your code here
-        
+        return self.denom/self.num
     def invert(self):
         """ Sets self's numerator to its denominator and vice versa.
             Returns None. """
         # your code here
-        
+        self.num, self.denom = self.denom, self.num
         
 # f1 = SimpleFraction(3,4)
 # print(f1.num, f1.denom)   # prints 3 4 
@@ -166,7 +168,7 @@ class Fraction(object):
         """ Returns a string representation of self """
         return str(self.num) + "/" + str(self.denom)
     def __mul__(self, other):
-        """ Returns a new fraction representing the addition """
+        """ Returns a new fraction representing the multiplication """
         top = self.num*other.num
         bottom = self.denom*other.denom
         return Fraction(top, bottom)
@@ -181,7 +183,7 @@ class Fraction(object):
         bottom = self.denom*other.denom
         return Fraction(top, bottom)
     def __truediv__(self, other):
-        """ Returns a new fraction representing the subtraction """
+        """ Returns a new fraction representing the division """
         top = self.num*other.denom
         bottom = self.denom*other.num
         return Fraction(top, bottom)
@@ -256,6 +258,8 @@ class Fraction(object):
     def __str__(self):
         """ Returns a string representation of self """
         # modify this
+        if self.denom == 1:
+            return str(self.num)
         return str(self.num) + "/" + str(self.denom)
 
  
@@ -282,7 +286,7 @@ class Fraction(object):
             return None
         elif self.denom == 1:
             # modify this
-            return self.num
+            return Fraction(self.num, 1)
         else:
             greatest_common_divisor = gcd(self.num, self.denom)
             top = int(self.num/greatest_common_divisor)
@@ -404,10 +408,35 @@ class Fraction(object):
 #Question 1.
 # Add a method to the Circle class that allows you to print a Circle object
 # (you decide how to best represent it!)
+class Circle(object):
+    def __init__(self, center, radius):
+        self.center = center
+        self.radius = radius
+    def is_inside(self, point):
+        return point.distance(self.center) < self.radius
+    # one way
+    def __str__(self):
+        return "circle: "+str(self.center)+", "+str(self.radius)
+    # alternate cooler way :)
+    # prints radius number of dashes to the left and right of the center
+    def __str__(self):
+        return "-"*self.radius+str(self.center)+"-"*self.radius
+
 
 #Question 2.
 # Implement a method in Fraction class such that the operator ** works
 #print(a**b) # works after you define it on two Fraction objects
+class Fraction(object):
+    def __init__(self, num, denom):
+        """ num and denom are integers """
+        self.num = num
+        self.denom = denom
+    def __float__(self):
+        return self.num/self.denom
+    def __str__(self):
+        return str(self.num) + "/" + str(self.denom)
+    def __pow__(self, other):
+        return float(self)**float(other)
 
 
 ###########################################################

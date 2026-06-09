@@ -128,7 +128,17 @@ def pairwise_div(Lnum, Ldenom):
     Raise a ValueError if Ldenom contains 0. """
     # your code here
     # challenge: write this with list comprehension!
-
+    assert(len(Lnum) ==  len(Ldenom))
+    assert(len(Lnum) != 0)
+    if 0 in Ldenom:
+        raise ValueError
+    else:
+        L = []
+        for i in range(len(Lnum)):
+            L.append(Lnum[i]/Ldenom[i])
+        return L
+    # L = [Lnum[i]/Ldenom[i] for i in range(len(Lnum)) if Ldenom[i] != 0]
+    # return L
     
 # For example:
 L1 = [4,5,6]
@@ -251,7 +261,14 @@ def pairwise_div(Lnum, Ldenom):
     Raise a ValueError if L2 contains 0 or if the code can't 
     perform the division for some reason. """
     # your code here
-
+    assert (len(Ldenom) == len(Lnum)) and (len(Lnum) != 0)
+    L = []
+    for i in range(len(Lnum)):
+        try:
+            L.append(Lnum[i]/Ldenom[i])
+        except:
+            raise ValueError
+    return L
 
 ##############################################
 ################### ANSWERS TO AT HOME ###################

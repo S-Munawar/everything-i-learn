@@ -18,8 +18,11 @@
 # range(-4,6,2)
 # range(5,6)
 
-#for i in range(5):
-    # your code here
+# count = 0
+# for i in range(5):
+#     if i % 2 == 0:
+#         count += 1
+# print(count)
 
 
 #############################################
@@ -75,8 +78,12 @@
 # s = "abca" Then your code prints 3. 
 
 # your code here
-s = 'abca'
-
+# s = 'abca'
+# unique = ""
+# for char in s:
+#     if char not in unique:
+#         unique += char
+# print(len(unique))
 
 ##############################################
 
@@ -123,8 +130,10 @@ s = 'abca'
 # secret value. If it's not found, it doesn't print anything. 
 
 # your code here
-secret = 4
-
+# secret = 4
+# for i in range(1, 11):
+#     if i == secret:
+#         print(f"{i} found the secret number")
 
 ################################################
 
@@ -135,8 +144,11 @@ secret = 4
 # secret value. If it's not found, prints that it didn't find it. 
 
 # your code here   
-secret = 4
-
+# secret = 12
+# for i in range(1, 11):
+#     if i == secret:
+#         print(f"{i} found the secret number")
+# print("not found")
     
 ####################################################
 
@@ -192,8 +204,8 @@ secret = 4
 #                 print(f"Cindy sold {cindy} tickets")
 
 # this code is better -- only one loop!
-# for alyssa in range(1001):
-#     ben = max(alyssa-20,0)
+# for alyssa in range(1001): # Try 441
+#     ben = max(alyssa-20, 0)
 #     cindy = alyssa*2
 #     if ben + cindy + alyssa == 1000:
 #         print(f'Alyssa sold {alyssa} tickets')
@@ -301,9 +313,14 @@ secret = 4
 # text2 = "revenge of the sixth"
 # Hint, start to write your code with a smaller example, then test it on the above text.
 
-# text1 = "abc"
-# text2 = "cde"
-# your code here
+# text1 = "may the fourth be with you"
+# text2 = "revenge of the sixth"
+# # your code here
+# common = ""
+# for i in text1:
+#     if i in text2 and i not in common:
+#         common += i
+# print(len(common))
 
 ####################################################
 ##################### END AT HOME ######################

@@ -95,5 +95,5 @@ L2_a = [128, 256, 512, 1024, 2048, 4096, 8192]
 L2_b = [1, 10, 100, 1000, 10000]
 # count_wrapper(c_to_f, L1)
 # count_wrapper(mysum, L1)
-# count_wrapper(square, L2_a)
-# count_wrapper(square, L2_b)
+count_wrapper(square, L2_a)
+count_wrapper(square, L2_b)

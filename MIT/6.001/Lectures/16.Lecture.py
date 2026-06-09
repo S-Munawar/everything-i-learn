@@ -70,10 +70,10 @@ test = [30, 40, 50]
     
 def total_len_recur(L):
     if len(L) == 1:
-        return ____
+        return len(L[0])
     else:
-        return ____
-
+        return len(L[0]) + total_len_recur(L[1:])
+    
 test = ["ab", "c", "defgh"]
 # print(total_len_recur(test))  # should print 8
 
@@ -165,8 +165,12 @@ def in_lists_of_list(L, e):
     Hint, the in operator is useful here, i.e. e in something
     """
     # your code here
-
-    
+    if len(L) == 1:
+        return e in L[0]
+    elif e in L[0]:
+        return True
+    else:
+        return in_lists_of_list(L[1:], e)
 
 test = [[1,2], [3,4], [5,6,7]]
 # print(in_lists_of_list(test, 3))  # prints True
@@ -206,7 +210,7 @@ def deep_rev(L):
 # test = [1, 2, "abc"]
 # print(my_rev(test))
 
-# test = ["abc", ['d'], ['e', ['f', 'g']]]
+test = ["abc", ['d'], ['e', ['f', 'g']]]
 # print(deep_rev(test))
 
 ## cleaned up code to reverse a list's elements (and its list elems, etc, recursively)
@@ -282,7 +286,12 @@ def in_lists_of_list(L, e):
 ######################################################
 # Q1. Memoize the code to find possible scores in basketball
 def score_count(x, d):
-    pass
+    if x in d:
+        return d[x]
+    else:
+        score = score_count(x-1, d), score_count(x-2, d), score_count(x-3, d)
+        d[x] = score
+        return score
     
 d = {1:1, 2:2, 3:3}
 # print(score_count(4, d))  # prints 6
@@ -299,7 +308,19 @@ def in_list_of_lists_mod(L, e):
     sublists of L and False otherwise. 
     """
     # your code here
-
+    if len(L) == 1:
+        if L[0] != list:
+            return L[0] == e
+        else:
+            return e in L[0]
+    else:
+        if type(L[0]) != list and L[0] == e:
+            return True
+        elif type(L[0]) == list and e in L[0]:
+            return True
+        else:
+            return in_list_of_lists_mod(L[1:], e)
+            
 
 # test = [[1,2],3,4,5,6,7]
 # print(in_list_of_lists_mod(test, 3))  # prints True
@@ -316,6 +337,13 @@ def my_deepcopy(L):
     contains copies (recursively) of every sublist 
     """
     # your code here
+    if L == []:
+        return []
+    else:
+        if type(L[0]) != list:
+            return [L[0]] + my_deepcopy(L[1:])
+        else:
+            return [my_deepcopy(L[0])] + my_deepcopy(L[1:])
 
 # myL = ["abc", ['d'], ['e', ['f', 'g']]]
 # my_newL = my_deepcopy(myL)
@@ -334,8 +362,8 @@ def f(L):
     if len(L) == 1:
         return L[0]
     else:
-        if L[0] < f((L[0])):
-            return L[0]
+        rest_min = f(L[1:])
+        return L[0] if L[0] < rest_min else rest_min
         
 # print(f(['z', 'a', 'b', 'c', 'd']))  # should print 'a'
 
@@ -352,9 +380,9 @@ def g(L, e):
             return 0
     else:
         if L[0] == e:
-            1+g(L[1:], e)
+            return 1+g(L[1:], e)
         else:
-            return 1
+            return g(L[1:], e)
     
 # print(g([1,2,3,1], 1))     # should print 2
 # print(g([1,1,2,3,1,1], 1)) # should print 4
@@ -373,11 +401,11 @@ def h(L, e):
                 return 1+h(L[1:], e)
             else:
                 return h(L[1:], e)
-        elif type(L[0])== list:
-            return h(L[1:], e)
+        elif type(L[0]) == list:
+            return h(L[0], e) + h(L[1:], e)
     
-# print(h([1,2,[3],1], 1))        # should print 2
-# print(h([1,2,[3,1,[1,[1]]]], 1))  # should print 4
+print(h([1,2,[3],1], 1))        # should print 2
+print(h([1,2,[3,1,[1,[1]]]], 1))  # should print 4
     
 #####################################################    
 

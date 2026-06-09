@@ -5,6 +5,9 @@
 ###########################
 #A very simple example of a function that has one
 #argument and returns one value
+from operator import indexOf
+
+
 def is_even(i):   
     """Assumes: i, a positive int
     Returns True if i is even, otherwise False"""
@@ -28,7 +31,7 @@ def div_by(n, d):
         Returns True if d divides n evenly and False otherwise 
     """
     # your code here
-
+    return n % d == 0
 
 # For example: 
 # print(div_by(10,3))     # print False
@@ -54,7 +57,7 @@ def div_by(n, d):
 def sum_odd(a, b):
     sum_of_odds = 0
     for i in range(a, b+1):
-        if i%2 == 0:
+        if i%2 == 1:
             sum_of_odds += i
             print(i, sum_of_odds)
     return sum_of_odds
@@ -84,6 +87,13 @@ def is_palindrome(s):
     Returns True if s is a palindrome and False otherwise
     """
     # your code here
+    for i in range(len(s)//2):
+        if s[i] != s[len(s)-1-i]:
+            return False
+    return True
+
+# print(is_palindrome("racecar")) # prints True
+# print(is_palindrome("hello")) # prints False
 
 ################################################
 
@@ -97,7 +107,13 @@ def keep_consonants(word):
         of word in the order they appear
     """
     # your code here
-
+    vowels = "aeiou"
+    ans = ""
+    for char in word:
+        if char not in vowels:
+            ans += char
+    return ans
+    
 # For example
 # print(keep_consonants("abcd"))  # prints bcd
 # print(keep_consonants("aaa"))  # prints an empty string
@@ -113,11 +129,25 @@ def first_to_last_diff(s, c):
         occur in s, returns -1. 
     """
     # your code here
+    if c not in s:
+        return -1
+    # if reach here, c is in s
+    diff = 0
+    for i in range(len(s)):
+        if s[i]==c:
+            # break here to save i as the first instance of c in s
+            for j in range(len(s)-1, i-1, -1):
+                if s[j]==c:
+                    # break here to save j as the last instance of c in s
+                    diff = j - i
+                    break
+            break
+    return diff
 
 # For example
-# print(first_to_last_diff('aaaa', 'a'))  # prints 3
-# print(first_to_last_diff('abcabcabc', 'b'))  # prints 6
-# print(first_to_last_diff('abcabcabc', 'b'))  # prints -1
+print(first_to_last_diff('aaaa', 'a'))  # prints 3
+print(first_to_last_diff('abcabcabc', 'b'))  # prints 6
+print(first_to_last_diff('abcabcabc', 'd'))  # prints -1
 
 
 ################################################

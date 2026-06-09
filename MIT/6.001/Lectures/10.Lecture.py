@@ -31,9 +31,12 @@ def make_ordered_list(n):
     from 0 to n (inclusive)
     """
     # your code here
-
+    L = []
+    for i in range(0, n+1):
+        L.append(i)
+    return L
     
-#print(make_ordered_list(6))  # prints [0, 1, 2, 3, 4, 5, 6]
+# print(make_ordered_list(6))  # prints [0, 1, 2, 3, 4, 5, 6]
 
 #####################################################
 
@@ -46,7 +49,11 @@ def remove_elem(L, e):
     but without any elements equal to e. 
     """
     # your code here
-
+    Lout = []
+    for i in L:
+        if not i == e:
+            Lout.append(i)
+    return Lout
   
 # L = [1,2,2,2]
 # print(remove_elem(L, 2))    # prints [1]
@@ -88,7 +95,8 @@ def count_words(sen):
     Returns how many words are in sen (i.e. a word is a 
     a sequence of characters between spaces. """
     # your code here
-
+    L = sen.split(" ")
+    return len(L)
 
 # s = "Hello it's me"
 # print(count_words(s))   # prints 3
@@ -120,7 +128,9 @@ def sort_words(sen):
     Returns a list containing all the words in sen but
     sorted in alphabetical order. """
     # your code here
-
+    L = sen.split(" ")
+    L.sort()
+    return L
 
 # s = "look at this photograph"
 # print(sort_words(s))    # prints ['at', 'look', 'photograph', 'this']
@@ -167,7 +177,7 @@ def square_list(L):
 #     i += 1
 #     print(L)
 
-## extend a list
+# # extend a list
 # L1 = [2,1,3]
 # L2 = [4,5,6]
 # L3 = L1 + L2
@@ -293,9 +303,11 @@ def sort_words(s):
 ## Question 3. 
 def apply_to_each(L, f):
     """ L is a list of numbers 
-        f is a list that takes in a number and returns a number
+        f is a function that takes in a number and returns a number
     Mutate L such that you apply function f to every element in L """
     # your code here
+    for i in range(len(L)):
+        L[i] = f(L[i])
 
 # test = [1,-2,3]
 # apply_to_each(test, lambda x: x**2)
@@ -313,7 +325,7 @@ def apply_to_each(L, f):
 
 def apply_to_each(L, f):
     """ L is a list of numbers 
-        f is a list that takes in a number and returns a number
+        f is a function that takes in a number and returns a number
     Mutate L such that you apply function f to every element in L """
     for i in range(len(L)): 
         L[i] = f(L[i])

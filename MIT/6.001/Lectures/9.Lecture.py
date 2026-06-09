@@ -35,6 +35,7 @@ def is_5(x):
 #    whether the parameter is a multiple of 10
 #    What does it print?
 # your code here
+# print(apply(lambda x: x%10==0, 30))
 
 
 def do_twice(n, fn):
@@ -68,7 +69,14 @@ def char_counts(s):
     is the number of consonants in s 
     """
     # your code here
-
+    vowels = 0
+    consonants = 0
+    for char in s:
+        if char in 'aeiou':
+            vowels += 1
+        else:
+            consonants += 1
+    return (vowels, consonants)
 
 # print(char_counts("abcd"))  # prints (1,3)
 # print(char_counts("zcght"))  # prints (0,5)
@@ -139,8 +147,13 @@ def sum_and_prod(L):
     is the product of all elements in L 
     """
     # your code here
-
- 
+    add = 0
+    product = 1
+    for i in L:
+        add += i
+        product *= i
+        
+    return (add, product) 
 
 # print(sum_and_prod([4,6,2,5]))   # prints (17, 240)
 
@@ -175,7 +188,7 @@ def always_sunny(t1, t2):
     first = t1[0] + t2[0]
     return (sun[0], first)
 
-# always_sunny(('cloudy' ), ('cold',))  # returns what?
+always_sunny(('cloudy' ), ('cold',))  # returns what?
 
 
 def max_of_both(n, f1, f2):
@@ -185,6 +198,14 @@ def max_of_both(n, f1, f2):
     Returns the maximum value of all these results.
     """
     # your code here
+    maximum = 0
+    for i in range(n+1):
+        v1 = f1(n)
+        v2 = f2(n)
+        
+        maximum = max(maximum, v1, v2)
+    
+    return maximum
 
 # print(max_of_both(2, lambda x:x-1, lambda x:x+1))  # prints 3
 # print(max_of_both(10, lambda x:x*2, lambda x:x/2))  # prints 20
@@ -194,9 +215,13 @@ def sublist_sum(L):
     """ L is a list whose elements are lists with int elements
     Returns the sum of all int elements. """
     # your code here
+    tot = 0
+    for subL in L:
+        tot += sum(subL)
+            
+    return tot
 
 # print(sublist_sum([[1,2], [4,5,6]])) # prints 18
-
 
 #############################################
 ################## ANSWERS TO AT HOME ####################

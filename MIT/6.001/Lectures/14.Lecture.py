@@ -42,7 +42,7 @@ grades = [eric, ana, john]
 def get_grade_dict(student, grade_dict):
     return grade_dict[student]
 
-# d = {'Ana':(2.00,'B'), 'John':(6.0001,'A'), 'Denise':(20.002,'A'), 'Katy':(9.01,'B')}
+d = {'Ana':(2.00,'B'), 'John':(6.0001,'A'), 'Denise':(20.002,'A'), 'Katy':(9.01,'B')}
 # print(get_grade_dict('John', d))
 
 
@@ -57,7 +57,7 @@ def get_grade_dict(student, grade_dict):
 # # get dict entries
 # grades = {'Ana':'B', 'Matt':'A', 'John':'B', 'Katy':'A'}
 # print(grades['John'] )
-# #print(grades['Grace'])  # this gives an error since 'Grace' is not in dict
+# # print(grades['Grace'])  # this gives an error since 'Grace' is not in dict
 
 # # add, edit, remove entries
 # grades = {'Ana':'B', 'Matt':'A', 'John':'B', 'Katy':'A'}
@@ -94,7 +94,10 @@ def find_grades(grades, students):
         students is a list of student names 
     Returns a list containing the grades for students (in the same order) """
     # your code here
-  
+    grades_list = []
+    for stud in students:
+        grades_list.append(grades[stud])
+    return grades_list
 
 d = {'Ana':'B', 'Matt':'C', 'John':'B', 'Katy':'A'}
 # print(find_grades(d, ['Matt', 'Katy'])) # returns ['C', 'A']
@@ -104,12 +107,15 @@ d = {'Ana':'B', 'Matt':'C', 'John':'B', 'Katy':'A'}
 
 ################## YOU TRY IT #########################
 def find_in_L(Ld, k):
-    """ L is a list of dicts
+    """ Ld is a list of dicts
         k is an int
     Returns True if k is a key in any dicts of L and False otherwise """
     # your code here
+    for dict in Ld:
+        if k in dict:
+            return True
+    return False
 
-  
 d1 = {1:2, 3:4, 5:6}
 d2 = {2:4, 4:6}
 d3 = {1:1, 3:9, 4:16, 5:25}
@@ -125,7 +131,11 @@ def count_matches(d):
     """ d is a dict
     Returns how many entries in d have the key equal to its value """
     # your code here
-
+    count = 0
+    for k,v in d.items():
+        if k == v:
+            count += 1
+    return count
 
 d = {1:2, 3:4, 5:6}
 # print(count_matches(d))   # prints 0
@@ -146,7 +156,7 @@ def get_average(data, what):
         Returns the average of all elements in data that match 'what' """
     all_data = []
     for stud in data.keys():
-        pass
+        all_data += data[stud][what]
         # Which one of the below is correct? 
         # A) all_data = all_data + data[stud][what]
         # B) all_data.append(data[stud][what]) 
@@ -220,14 +230,14 @@ def occurs_often(word_dict, x):
     word_freq_tuple = find_frequent_word(word_dict)
     # repeat for the frequencies greater than 'x'
     while word_freq_tuple[1] > x:
-        # extract most frequent word(s) using function we wrote
-        word_freq_tuple = find_frequent_word(word_dict)
         # keep track of most common words, append them in order
         freq_list.append(word_freq_tuple)
         # remove every entry that matches words in `word_freq_tuple`
         # so that you are left with next most frequent words
         for word in word_freq_tuple[0]:
             del(word_dict[word])
+        # extract most frequent word(s) using function we wrote
+        word_freq_tuple = find_frequent_word(word_dict)
     return freq_list
 
 # print(occurs_often(word_dict, 2))
@@ -313,18 +323,24 @@ def is_inverse(d1, d2):
     Assume values of d1 and d2 are unique and immutable
     Returns True if d1's keys are values in d2 and d1's 
     values are keys in d2 """
-    pass
+    for v in d1.values():
+        if (v not in d2.keys()):
+            return False
+    for v in d2.values():
+        if (v not in d1.keys()):
+            return False
+    return True
 
-# d1 = {1:2, 3:4}
-# d2 = {2:1, 4:3}
+d1 = {1:2, 3:4}
+d2 = {2:1, 4:3}
 # print(is_inverse(d1, d2))  # prints True
 
-# d1 = {1:2, 3:4}
-# d2 = {2:1, 4:3, 5:6}
+d1 = {1:2, 3:4}
+d2 = {2:1, 4:3, 5:6}
 # print(is_inverse(d1, d2))  # prints False
  
-# d1 = {1:2, 3:4}
-# d2 = {1:2, 2:1}
+d1 = {1:2, 3:4}
+d2 = {1:2, 2:1}
 # print(is_inverse(d1, d2))  # prints False
 
 
@@ -335,22 +351,28 @@ def add_to_d(d, L):
     tuple in L and the associated value is the second element of a 
     tuple in L. If the key is already in d, do nothing to its value. 
     If the key cannot be added, raise a ValueError. Returns None. """
-    pass
     
-# d = {}
-# L = [(1,2), (3,4)]
-# add_to_d(d, L)
-# print(d)   # d is mutated to be {1: 2, 3: 4}
+    for t in L:
+        try:
+            if t[0] not in d:
+                d[t[0]] = t[1]
+        except:
+            raise ValueError
+    
+d = {}
+L = [(1,2), (3,4)]
+add_to_d(d, L)
+print(d)   # d is mutated to be {1: 2, 3: 4}
 
-# d = {1:1}
-# L = [(1,2), (3,4)]
-# add_to_d(d, L)
-# print(d)   # d is mutated to be {1: 1, 3: 4}
+d = {1:1}
+L = [(1,2), (3,4)]
+add_to_d(d, L)
+print(d)   # d is mutated to be {1: 1, 3: 4}
 
-# d = {1:1}
-# L = [(3,4), ([1,2,3], 5)]
-# add_to_d(d, L)   
-# # raises a ValueError because its trying to add a list (mutable obj) as key
+d = {1:1}
+L = [(3,4), ([1,2,3], 5)]
+add_to_d(d, L)   
+# raises a ValueError because its trying to add a list (mutable obj) as key
 
 
 ################################################################

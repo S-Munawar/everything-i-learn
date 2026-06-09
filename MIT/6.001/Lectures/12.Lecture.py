@@ -120,8 +120,8 @@ def make_prod(a):
 ## STEP 1: run it with test cases
 def is_pal(x):
     """ Returns True is list x is a palindrome and False otherwise """
-    temp = x
-    temp.reverse
+    temp = x[:]
+    temp.reverse()
     if temp == x:
         return True
     else:
@@ -198,7 +198,8 @@ def is_pal(x):
 # If L = ['abc', 'm', 'p', 'xyz', '123', 57]
 # It makes ['b', 'y', '2']
 L = ['abc', 'm', 'p', 'xyz', '123', 57]
-
+new_L = [e[1] for e in L if type(e) == str and len(e) == 3]
+# print(new_L)
 
 ## There is a file lec12_wordle.py that is buggy!
 ## Try to fix the code to play the game correctly
