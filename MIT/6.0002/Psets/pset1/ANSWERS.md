@@ -140,3 +140,97 @@ return dp[target_weight]
 | **DP Solution** | Guaranteed optimal by checking all combinations |
 | **Result** | 9 eggs (optimal) |
 | **Time** | Fast - polynomial time with memoization |
+
+---
+
+# Problem Set 1b Questions (1B)
+
+## Question 1: Why Brute Force is Difficult with 30 Egg Weights
+
+A brute force algorithm would need to explore all possible combinations of eggs that sum to the target weight.
+
+### The Core Issue: Combinatorial Explosion
+- For each egg weight, you have multiple choices (take 0, 1, 2, 3, ... of them)
+- With 30 different egg weights and a target weight (say 100+), the number of possible combinations is enormous
+- The search space grows multiplicatively: if target is 100 and you have 30 weights, you're essentially exploring partitions of 100 using 30 different denominations
+- **Time Complexity:** Roughly O(target_weight^num_weights) or worse, which is exponential
+
+### Why It's Computationally Infeasible:
+- With just 10 eggs and target 50, you might have ~10^50 or more combinations to check
+- With 30 eggs, this becomes computationally infeasible on any practical hardware
+- The algorithm would try billions of combinations like:
+  - 100 eggs of weight 1
+  - 99 eggs of weight 1 + 1 egg of weight 2
+  - 98 eggs of weight 1 + 2 eggs of weight 2
+  - ... and exponentially more combinations
+
+**Conclusion:** Brute force becomes intractable because the number of possible combinations grows exponentially with the number of egg weights, making it impossible to solve in reasonable time.
+
+---
+
+## Question 2: Greedy Algorithm Design
+
+### Objective Function:
+**Minimize the total number of eggs** used to reach the target weight.
+
+### Constraints:
+- The sum of selected eggs must equal the target weight
+- We can use unlimited quantities of each egg weight
+- We must have an egg of weight 1 (to guarantee a solution exists)
+- Each egg weight can be selected zero or more times
+
+### Greedy Strategy:
+The algorithm would follow this approach:
+1. Start from the **largest egg weight** available
+2. Repeatedly take as many eggs of the largest weight that fit without exceeding the target
+3. Move to the next smaller weight and repeat
+4. Continue until reaching exactly the target weight
+
+### Pseudocode:
+```
+eggs_used = 0
+remaining_weight = target_weight
+for each egg_weight in descending order:
+    count = remaining_weight / egg_weight  (integer division)
+    eggs_used += count
+    remaining_weight -= count * egg_weight
+return eggs_used
+```
+
+### Example with egg_weights = (1, 5, 10, 25), target = 99:
+- Take 3 eggs of weight 25 → remaining = 24
+- Take 2 eggs of weight 10 → remaining = 4
+- Take 0 eggs of weight 5 → remaining = 4
+- Take 4 eggs of weight 1 → remaining = 0
+- **Total: 9 eggs** (happens to be optimal in this case)
+
+---
+
+## Question 3: Does Greedy Always Return the Optimal Solution?
+
+### Answer: NO, greedy does not always return the optimal solution.
+
+### Counterexample:
+| Property | Value |
+|----------|-------|
+| **Egg weights** | (1, 3, 4) |
+| **Target weight** | 6 |
+| **Greedy result** | 3 eggs |
+| **Optimal result** | 2 eggs |
+
+**Greedy picks:** 4 + 1 + 1 = 3 eggs  
+**Optimal picks:** 3 + 3 = 2 eggs
+
+### Why Greedy Fails:
+The greedy choice property doesn't hold for arbitrary egg denominations. By greedily taking the largest weight (4), you're left with 2 remaining weight, which forces you to use two eggs of weight 1. However, a globally optimal solution uses 3+3=2 eggs total.
+
+### Key Insight:
+- Greedy is only guaranteed to work for coin change with **specific denominations** (like U.S. currency: 1, 5, 10, 25)
+- With **arbitrary denominations**, greedy can produce suboptimal results
+- **Dynamic programming** is required to guarantee the optimal minimum number of eggs for any arbitrary set of egg weights
+
+### Why This Matters:
+This demonstrates why dynamic programming is the correct algorithmic approach for the egg weight problem:
+- It explores all possibilities efficiently through memoization
+- It guarantees an optimal solution without the exponential explosion of brute force
+- It runs in polynomial time O(target_weight × num_eggs)
