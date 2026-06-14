@@ -1,10 +1,8 @@
 ###########################
 # 6.0002 Problem Set 1a: Space Cows 
-# Name:
-# Collaborators:
-# Time:
-
-from matplotlib.pylab import partition
+# Name: Shaik Abdul Munawar
+# Collaborators: None
+# Time: 6:00:00
 
 from ps1_partition import get_partitions
 import time

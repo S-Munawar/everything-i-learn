@@ -1,8 +1,8 @@
 ###########################
 # 6.0002 Problem Set 1b: Space Change
-# Name:
-# Collaborators:
-# Time:
+# Name: Shaik Abdul Munawar
+# Collaborators: None
+# Time: 6:00:00
 # Author: charz, cdenise
 
 #================================
