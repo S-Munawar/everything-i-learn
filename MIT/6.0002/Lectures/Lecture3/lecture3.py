@@ -127,10 +127,10 @@ def testSP(source, destination):
     else:
         print('There is no path from', source, 'to', destination)
 
-testSP('Chicago', 'Boston')
-print()
-#testSP('Boston', 'Phoenix')
-#print()
+# testSP('Chicago', 'Boston')
+# print()
+# testSP('Boston', 'Phoenix')
+# print()
 
 printQueue = True 
 
@@ -163,5 +163,5 @@ def shortestPath(graph, start, end, toPrint = False):
        Returns a shortest path from start to end in graph"""
     return BFS(graph, start, end, toPrint)
     
-#testSP('Boston', 'Phoenix')
+testSP('Boston', 'Phoenix')
     
