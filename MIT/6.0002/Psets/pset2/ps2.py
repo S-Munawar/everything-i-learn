@@ -21,7 +21,17 @@ from graph import Digraph, Node, WeightedEdge
 #
 # Answer:
 #
-
+# The graph's nodes represent MIT buildings (identified by building numbers).
+# Each node corresponds to a location on campus.
+#
+# The graph's edges represent directed paths between buildings that can be
+# traveled. An edge from building A to building B indicates that it is
+# possible to walk directly from A to B.
+#
+# Distances are represented as weights on the edges. Each WeightedEdge stores
+# two distances: the total distance of the path and the outdoor distance of
+# the path. These weights are used when searching for paths that satisfy
+# distance constraints.
 
 # Problem 2b: Implementing load_map
 def load_map(map_filename):
@@ -45,10 +55,30 @@ def load_map(map_filename):
 
     # TODO
     print("Loading map from file...")
+    graph = Digraph()
+    with open(map_filename, "r") as file:
+        for line in file: 
+            
+            src, dest, total, outdoor = line.split()
+            src_node = Node(src)
+            dest_node = Node(dest)
+            
+            if not graph.has_node(src_node):
+                graph.add_node(src_node)
+            if not graph.has_node(dest_node):
+                graph.add_node(dest_node)
+            
+            edge = WeightedEdge(src_node, dest_node, int(total), int(outdoor))
+            
+            graph.add_edge(edge)
+    
+    return graph
 
 # Problem 2c: Testing load_map
 # Include the lines used to test load_map below, but comment them out
-
+# graph = load_map("mit_map.txt")
+# with open("test_load_map.txt", "w") as file:
+#     file.write(str(graph))
 
 #
 # Problem 3: Finding the Shorest Path using Optimized Search Method
@@ -96,9 +126,36 @@ def get_best_path(digraph, start, end, path, max_dist_outdoors, best_dist,
         max_dist_outdoors constraints, then return None.
     """
     # TODO
-    pass
+    path_nodes, tot_dist, tot_outdoors = path
+    
+    if start == end:
+        return path_nodes, tot_dist
 
+    for edge in digraph.get_edges_for_node(Node(start)):
+        next_name = edge.get_destination().get_name()
 
+        if next_name in path_nodes:
+            continue
+
+        new_dist = tot_dist + edge.get_total_distance()
+        new_outdoors = tot_outdoors + edge.get_outdoor_distance()
+
+        if new_outdoors > max_dist_outdoors:
+            continue
+        if best_dist is not None and new_dist >= best_dist:
+            continue
+
+        result = get_best_path(
+            digraph, next_name, end,
+            [path_nodes + [next_name], new_dist, new_outdoors],
+            max_dist_outdoors, best_dist, best_path
+        )
+
+        if result is not None:
+            best_path, best_dist = result
+
+    return (best_path, best_dist) if best_path is not None else None
+        
 # Problem 3c: Implement directed_dfs
 def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
     """
@@ -129,7 +186,22 @@ def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
         max_dist_outdoors constraints, then raises a ValueError.
     """
     # TODO
-    pass
+    if not digraph.has_node(Node(start)) or not digraph.has_node(Node(end)):
+        raise ValueError(f"Node {start} or {end} not in graph")
+    
+    result = get_best_path(digraph, start, end, [[start], 0, 0],
+                           max_dist_outdoors, None, None)
+
+    if result is None:
+        raise ValueError(f"No path from {start} to {end} satisfying constraints")
+
+    best_path, best_dist = result
+
+    # Enforce total-distance constraint
+    if best_dist is None or best_dist > max_total_dist:
+        raise ValueError(f"No path from {start} to {end} within total distance")
+
+    return best_path
 
 
 # ================================================================
