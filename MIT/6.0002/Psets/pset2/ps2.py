@@ -1,8 +1,8 @@
 # 6.0002 Problem Set 5
 # Graph optimization
-# Name:
-# Collaborators:
-# Time:
+# Name: Shaik Abdul Munawar
+# Collaborators: None
+# Time: 6:00:00
 
 #
 # Finding shortest paths through MIT buildings
@@ -198,7 +198,7 @@ def directed_dfs(digraph, start, end, max_total_dist, max_dist_outdoors):
     best_path, best_dist = result
 
     # Enforce total-distance constraint
-    if best_dist is None or best_dist > max_total_dist:
+    if best_dist > max_total_dist:
         raise ValueError(f"No path from {start} to {end} within total distance")
 
     return best_path
