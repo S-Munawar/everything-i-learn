@@ -4,9 +4,19 @@
 # Time: 
 
 import math
-import numpy as np
-import pylab as pl
 import random
+
+try:
+    import pylab as pl
+except ImportError:
+    class _PlotStub(object):
+        def __getattr__(self, name):
+            def _noop(*args, **kwargs):
+                return None
+
+            return _noop
+
+    pl = _PlotStub()
 
 random.seed(0)
 
@@ -70,6 +80,26 @@ def make_two_curve_plot(x_coords,
     pl.plot(x_coords, y_coords2, label=y_name2)
     pl.legend()
     pl.xlabel(x_label)
+    pl.ylabel(y_label)
+    pl.title(title)
+    pl.show()
+
+
+def make_ci_bar_plot(labels, means, widths, title, y_label):
+    """
+    Makes a simple error-bar plot for confidence intervals.
+
+    Args:
+        labels (list of str): labels for each interval
+        means (list of float): interval centers
+        widths (list of float): 95% CI half-widths
+        title (str): title for the plot
+        y_label (str): label for the y-axis
+    """
+    pl.figure()
+    x_coords = list(range(len(labels)))
+    pl.errorbar(x_coords, means, yerr=widths, fmt='o', capsize=6)
+    pl.xticks(x_coords, labels)
     pl.ylabel(y_label)
     pl.title(title)
     pl.show()
@@ -639,18 +669,44 @@ def simulation_with_antibiotic(num_bacteria,
     
 # When you are ready to run the simulations, uncomment the next lines one
 # at a time
-total_pop, resistant_pop = simulation_with_antibiotic(num_bacteria=100,
-                                                      max_pop=1000,
-                                                      birth_prob=0.3,
-                                                      death_prob=0.2,
-                                                      resistant=False,
-                                                      mut_prob=0.8,
-                                                      num_trials=50)
+total_pop_a, resistant_pop_a = simulation_with_antibiotic(num_bacteria=100,
+                                                           max_pop=1000,
+                                                           birth_prob=0.3,
+                                                           death_prob=0.2,
+                                                           resistant=False,
+                                                           mut_prob=0.8,
+                                                           num_trials=50)
+ci_a_total = calc_95_ci(total_pop_a, 299)
+ci_a_resistant = calc_95_ci(resistant_pop_a, 299)
+print("95% confidence interval for total population at time step 299:", ci_a_total)
+print("95% confidence interval for resistant population at time step 299:", ci_a_resistant)
 
-total_pop, resistant_pop = simulation_with_antibiotic(num_bacteria=100,
-                                                      max_pop=1000,
-                                                      birth_prob=0.17,
-                                                      death_prob=0.2,
-                                                      resistant=False,
-                                                      mut_prob=0.8,
-                                                      num_trials=50)
+total_pop_b, resistant_pop_b = simulation_with_antibiotic(num_bacteria=100,
+                                                           max_pop=1000,
+                                                           birth_prob=0.17,
+                                                           death_prob=0.2,
+                                                           resistant=False,
+                                                           mut_prob=0.8,
+                                                           num_trials=50)
+
+ci_b_total = calc_95_ci(total_pop_b, 299)
+ci_b_resistant = calc_95_ci(resistant_pop_b, 299)
+print("95% confidence interval for total population at time step 299:", ci_b_total)
+print("95% confidence interval for resistant population at time step 299:", ci_b_resistant)
+
+make_ci_bar_plot([
+    "A total",
+    "A resistant",
+    "B total",
+    "B resistant",
+], [
+    ci_a_total[0],
+    ci_a_resistant[0],
+    ci_b_total[0],
+    ci_b_resistant[0],
+], [
+    ci_a_total[1],
+    ci_a_resistant[1],
+    ci_b_total[1],
+    ci_b_resistant[1],
+], "95% Confidence Intervals at Time Step 299", "Population")
